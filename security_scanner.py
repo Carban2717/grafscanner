@@ -51,24 +51,24 @@ def check_security_vulnerabilities(url):
             security_issue_detected = False
             
             if 'x-amz-server-side-encryption' not in headers:
-                print(Fore.RED + "Güvenlik açığı var: Sunucu tarafı şifreleme başlığı bulunmuyor.")
+                print(Fore.GREEN + "Güvenlik açığı var: Sunucu tarafı şifreleme başlığı bulunmuyor.")
                 security_issue_detected = True
 
             # Meta bilgileri kontrol et
             meta_tags = soup.find_all('meta')
             robots_meta = any(meta.get('name') == 'robots' and 'noindex' in meta.get('content', '') for meta in meta_tags)
             if robots_meta:
-                print(Fore.RED + "Güvenlik açığı var: robots meta etiketi noindex içeriyor.")
+                print(Fore.GREEN + "Güvenlik açığı var: robots meta etiketi noindex içeriyor.")
                 security_issue_detected = True
             
             if not security_issue_detected:
-                print(Fore.GREEN + "Güvenlik açığı yok.")
+                print(Fore.RED + "Güvenlik açığı yok.")
         else:
             print(Fore.RED + f"Siteye erişim sağlanamadı. HTTP durum kodu: {response.status_code}")
 
     except Exception as e:
-        print(Fore.RED + f"Hata: {e}")
-        print(Fore.RED + "Güvenlik açığı durumu bilinmiyor.")
+        print(Fore.BLUE + f"Hata: {e}")
+        print(Fore.BLUE + "Güvenlik açığı durumu bilinmiyor.")
 
 def admin_panel():
     clear_screen()
@@ -98,9 +98,9 @@ def main():
             break
         elif choice == '2':
             clear_screen()
-            url = input(Fore.GREEN + "Site (örn. http://example.com veya https://example.com): ")
+            url = input(Fore.WHITE + "Site (örn. http://example.com veya https://example.com): ")
             check_security_vulnerabilities(url)
-            input(Fore.GREEN + "Devam etmek için bir tuşa basın...")
+            input(Fore.WHITE + "Devam etmek için bir tuşa basın...")
         elif choice == '3':
             admin_panel()
         else:

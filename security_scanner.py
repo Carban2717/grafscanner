@@ -15,24 +15,25 @@ def clear_screen():
 def print_menu():
     clear_screen()
     print(Fore.BLUE + """
-   ____ ____      _    _____ _____ ___   ___  _     
-  / ___|  _ \    / \  |  ___|_   _/ _ \ / _ \| |    
- | |  _| |_) |  / _ \ | |_    | || | | | | | | |    
- | |_| |  _ <  / ___ \|  _|   | || |_| | |_| | |___ 
-  \____|_| \_\/_/   \_\_|     |_| \___/ \___/|_____|
-                                                    
+   _____ _____            ______ _______ ____   ____  _      
+  / ____|  __ \     /\   |  ____|__   __/ __ \ / __ \| |     
+ | |  __| |__) |   /  \  | |__     | | | |  | | |  | | |     
+ | | |_ |  _  /   / /\ \ |  __|    | | | |  | | |  | | |     
+ | |__| | | \ \  / ____ \| |       | | | |__| | |__| | |____ 
+  \_____|_|  \_\/_/    \_\_|       |_|  \____/ \____/|______|
+                                                             
+                                                                                                                                                                             
+                                                                                                             
 """)
     print(Fore.RED + """
-   _____ ______ _____ _    _ _____  _____ _________     __   _____  _____          _   _ _   _ ______ _____  
-  / ____|  ____/ ____| |  | |  __ \|_   _|__   __\ \   / /  / ____|/ ____|   /\   | \ | | \ | |  ____|  __ \ 
- | (___ | |__ | |    | |  | | |__) | | |    | |   \ \_/ /  | (___ | |       /  \  |  \| |  \| | |__  | |__) |
-  \___ \|  __|| |    | |  | |  _  /  | |    | |    \   /    \___ \| |      / /\ \ | . ` | . ` |  __| |  _  / 
-  ____) | |___| |____| |__| | | \ \ _| |_   | |     | |     ____) | |____ / ____ \| |\  | |\  | |____| | \ \ 
- |_____/|______\_____|\____/|_|  \_\_____|  |_|     |_|    |_____/ \_____/_/    \_\_| \_|_| \_|______|_|  \_\
-                                                                                                             
-                                                                                                                                                                                             
-                                                                                                                                          
-""")
+   _____   _____  _____          _   _ _   _ ______ _____  
+  / ____| / ____|/ ____|   /\   | \ | | \ | |  ____|  __ \ 
+ | (___  | (___ | |       /  \  |  \| |  \| | |__  | |__) |
+  \___ \  \___ \| |      / /\ \ | . ` | . ` |  __| |  _  / 
+  ____) | ____) | |____ / ____ \| |\  | |\  | |____| | \ \ 
+ |_____(_)_____/ \_____/_/    \_\_| \_|_| \_|______|_|  \_\
+                                                           
+""")                                                       
     print(Fore.YELLOW + "Developer: carbans2717")
     print(Fore.GREEN + "[01] Çıkış")
     print(Fore.GREEN + "[02] Güvenlik Açığı Taraması")
@@ -50,24 +51,24 @@ def check_security_vulnerabilities(url):
             security_issue_detected = False
             
             if 'x-amz-server-side-encryption' not in headers:
-                user_activity_log.append(f"Site {url} için güvenlik açığı: Sunucu tarafı şifreleme başlığı bulunmuyor.")
+                print(Fore.RED + "Güvenlik açığı var: Sunucu tarafı şifreleme başlığı bulunmuyor.")
                 security_issue_detected = True
 
             # Meta bilgileri kontrol et
             meta_tags = soup.find_all('meta')
             robots_meta = any(meta.get('name') == 'robots' and 'noindex' in meta.get('content', '') for meta in meta_tags)
             if robots_meta:
-                user_activity_log.append(f"Site {url} için güvenlik açığı: robots meta etiketi noindex içeriyor.")
+                print(Fore.RED + "Güvenlik açığı var: robots meta etiketi noindex içeriyor.")
                 security_issue_detected = True
             
             if not security_issue_detected:
-                user_activity_log.append(f"Site {url} için güvenlik açığı bulunmadı.")
+                print(Fore.GREEN + "Güvenlik açığı yok.")
         else:
-            user_activity_log.append(f"Site {url} erişilemedi. HTTP durum kodu: {response.status_code}")
+            print(Fore.RED + f"Siteye erişim sağlanamadı. HTTP durum kodu: {response.status_code}")
 
     except Exception as e:
-        user_activity_log.append(f"Hata: {e}")
-        user_activity_log.append("Güvenlik açığı durumu bilinmiyor.")
+        print(Fore.RED + f"Hata: {e}")
+        print(Fore.RED + "Güvenlik açığı durumu bilinmiyor.")
 
 def admin_panel():
     clear_screen()
